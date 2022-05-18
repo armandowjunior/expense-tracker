@@ -1,6 +1,10 @@
-import { useState } from "react";
+import Spinner from "../components/Spinner";
+import { useState, useEffect } from "react";
 import { VscAccount } from "react-icons/vsc";
 import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { registerUser, reset } from "../redux/auth/authSlice";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -19,13 +23,44 @@ const Register = () => {
     }));
   };
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, pending, error, errorMessage } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (error) {
+      toast.error(errorMessage);
+    }
+
+    if (user) {
+      navigate("/");
+    }
+
+    dispatch(reset());
+  }, [user, error, errorMessage, navigate, dispatch]);
+
   const onSubmit = (e) => {
     e.preventDefault();
 
     if (password !== password2) {
       toast.error("Passwords do not match");
+    } else {
+      const userInfo = {
+        name,
+        email,
+        password,
+      };
+
+      dispatch(registerUser(userInfo));
     }
   };
+
+  if (pending) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -82,9 +117,14 @@ const Register = () => {
             />
           </div>
           <button type="submit" className="btn btn-submit">
-            Submit
+            Register
           </button>
         </form>
+      </section>
+      <section className="new-account-text">
+        <p>
+          Already have an account? <Link to={"/login"}>Sign in</Link>
+        </p>
       </section>
     </>
   );

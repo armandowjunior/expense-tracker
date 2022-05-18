@@ -1,6 +1,10 @@
-import { useState } from "react";
+import Spinner from "../components/Spinner";
+import { useState, useEffect } from "react";
 import { MdLogin } from "react-icons/md";
-// import { toast } from "react-toastify";
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { reset, loginUser } from "../redux/auth/authSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +21,40 @@ const Login = () => {
     }));
   };
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, pending, error, errorMessage } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (error) {
+      toast.error(errorMessage);
+    }
+
+    if (user) {
+      navigate("/");
+    }
+
+    dispatch(reset());
+  }, [user, error, errorMessage, navigate, dispatch]);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const userInfo = {
+      email,
+      password,
+    };
+
+    dispatch(loginUser(userInfo));
+  };
+
+  if (pending) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <section className="heading">
@@ -26,7 +64,7 @@ const Login = () => {
         <p>Login into your account</p>
       </section>
       <section className="form">
-        <form>
+        <form onSubmit={onSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
@@ -49,12 +87,14 @@ const Login = () => {
             />
           </div>
           <button type="submit" className="btn btn-submit">
-            Submit
+            Login
           </button>
         </form>
       </section>
       <section className="new-account-text">
-        <p>Don't have an account yet? Register here</p>
+        <p>
+          Don't have an account yet? <Link to={"/register"}>Register here</Link>
+        </p>
       </section>
     </>
   );
