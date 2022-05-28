@@ -1,8 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService";
+import { toast } from "react-toastify";
 
-// Popula o state.user no início com o que existe no localStorage
-const user = JSON.parse(localStorage.getItem("user"));
+// Verifica se o user existe no localStorage e não está vazio, se existir popula o state.user
+// no início com o que existe no localStorage, se não, limpa o localStorage;
+let user;
+
+try {
+  user = JSON.parse(localStorage.getItem("user"));
+} catch (error) {
+  toast.error("An error occurred, please try again later");
+  console.log(error);
+  localStorage.removeItem("user");
+}
 
 const initialState = {
   user: user ? user : null,
@@ -38,7 +48,6 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      state.pending = false;
       state.error = false;
       state.errorMessage = "";
     },

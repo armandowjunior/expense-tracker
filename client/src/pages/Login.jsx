@@ -31,13 +31,12 @@ const Login = () => {
   useEffect(() => {
     if (error) {
       toast.error(errorMessage);
+      dispatch(reset());
     }
 
     if (user) {
       navigate("/");
     }
-
-    dispatch(reset());
   }, [user, error, errorMessage, navigate, dispatch]);
 
   const onSubmit = (e) => {
@@ -74,6 +73,7 @@ const Login = () => {
               value={email}
               placeholder="Enter your email"
               onChange={onChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -84,6 +84,7 @@ const Login = () => {
               value={password}
               placeholder="Enter password"
               onChange={onChange}
+              required
             />
           </div>
           <button type="submit" className="btn btn-submit">

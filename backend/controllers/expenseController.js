@@ -16,12 +16,7 @@ const createExpense = async (req, res, next) => {
     });
 
     if (expense) {
-      res.status(201).json({
-        userId: req.user._id,
-        desc,
-        value,
-        expenseDate,
-      });
+      res.status(201).json(expense);
     }
   } catch (error) {
     next(error);
@@ -34,7 +29,9 @@ const createExpense = async (req, res, next) => {
 
 const getExpenses = async (req, res, next) => {
   try {
-    const expenses = await Expense.find({ userId: req.user._id });
+    const expenses = await Expense.find({ userId: req.user._id }).sort({
+      expenseDate: -1,
+    });
 
     res.status(200).json(expenses);
   } catch (error) {

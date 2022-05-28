@@ -32,7 +32,11 @@ header {
 
 header p {
   padding: 0.5rem;
-  cursor: pointer;
+}
+
+.header-link,
+.header-link:active {
+  text-decoration: none;
 }
 
 .heading {
@@ -71,12 +75,12 @@ header p {
 }
 
 .balance {
-  width: 30%;
+  width: fit-content;
   text-align: center;
   line-height: 1.75;
   margin: 1rem auto;
   padding: 1rem;
-  border: 1px solid black;
+  border: 1px solid #cfc8cf;
   border-radius: 5px;
   font-weight: 500;
 }
@@ -89,10 +93,11 @@ header p {
 .income {
   color: rgb(18, 164, 18);
   border-right: 1px solid #cfc8cf;
-  padding-right: 1.25rem;
+  padding-right: 2rem;
 }
 
 .expense {
+  padding-left: 2rem;
   color: rgb(192, 11, 11);
 }
 
@@ -120,13 +125,13 @@ header p {
 }
 
 .filter {
-  width: 35%;
+  width: 40%;
   margin: 0 auto;
   text-align: center;
 }
 
 .filter-form {
-  border: 1px solid black;
+  border: 1px solid #cfc8cf;
   border-radius: 5px;
   padding: 0.5rem;
   font-weight: 500;
@@ -148,21 +153,30 @@ header p {
   justify-content: space-between;
 }
 
-.expenses-list {
+.expense-item {
   font-size: 1rem;
   font-weight: 500;
   width: 60%;
-  margin: 1rem auto;
+  margin: 0.5rem auto;
   padding: 0.5rem 0.5rem 0.5rem 1.25rem;
-  border-radius: 10px;
-  box-shadow: 2px 2px 5px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px #cfc8cf;
   position: relative;
+}
+
+.desc-text {
+  width: 60%;
+  word-wrap: break-word;
 }
 
 .expense-desc-value {
   display: flex;
   justify-content: space-between;
   font-weight: 600;
+}
+
+.expense-date {
+  font-size: 0.75rem;
 }
 
 .delete-btn {
@@ -174,10 +188,20 @@ header p {
   left: -11px;
 }
 
+.no-expenses {
+  text-align: center;
+  font-size: 1.25rem;
+  padding: 1.5rem;
+}
+
 .value-positive,
 .value-negative {
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: rgb(18, 164, 18);
+}
+
+.value-negative {
+  color: rgb(192, 11, 11);
 }
 
 .btn {
@@ -226,6 +250,32 @@ header p {
 .spinner {
   font-size: 12.5rem;
   animation: spin 2s ease-in-out infinite;
+}
+
+.not-found {
+  text-align: center;
+  margin: 2.5rem auto;
+}
+
+.sad-face {
+  font-size: 12rem;
+  color: #cfc8cf;
+}
+
+.not-found h1 {
+  color: #cfc8cf;
+  font-size: 5rem;
+  margin: 0;
+}
+
+.not-found h2 {
+  font-size: 2rem;
+}
+
+.not-found p {
+  margin: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 @keyframes spin {

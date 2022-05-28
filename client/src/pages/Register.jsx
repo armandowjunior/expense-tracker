@@ -33,13 +33,12 @@ const Register = () => {
   useEffect(() => {
     if (error) {
       toast.error(errorMessage);
+      dispatch(reset());
     }
 
     if (user) {
       navigate("/");
     }
-
-    dispatch(reset());
   }, [user, error, errorMessage, navigate, dispatch]);
 
   const onSubmit = (e) => {
@@ -81,6 +80,7 @@ const Register = () => {
               value={name}
               placeholder="Enter your name"
               onChange={onChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -92,6 +92,7 @@ const Register = () => {
               value={email}
               placeholder="Enter your email"
               onChange={onChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -103,6 +104,7 @@ const Register = () => {
               value={password}
               placeholder="Enter password"
               onChange={onChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -114,6 +116,7 @@ const Register = () => {
               value={password2}
               placeholder="Confirm your password"
               onChange={onChange}
+              required
             />
           </div>
           <button type="submit" className="btn btn-submit">

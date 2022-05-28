@@ -1,13 +1,18 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { registerExpense } from "../redux/expenses/expenseSlice";
+import { toast } from "react-toastify";
 
 const ExpenseForm = () => {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
-    description: "",
+    desc: "",
     value: "",
-    date: "",
+    expenseDate: "",
   });
 
-  const { description, value, date } = formData;
+  const { desc, value, expenseDate } = formData;
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -16,23 +21,40 @@ const ExpenseForm = () => {
     }));
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (value === "0") {
+      return toast.error("Please add a positive or negative value");
+    }
+
+    dispatch(
+      registerExpense({
+        desc,
+        value,
+        expenseDate: new Date(expenseDate + "T00:00:00"),
+      })
+    );
+  };
+
   return (
     <section className="expense-form">
-      <form className="form">
-        <label htmlFor="description">Description</label>
+      <form className="form" onSubmit={onSubmit}>
+        <label htmlFor="desc">Description</label>
         <div className="description-input">
           <input
             type="text"
-            name="description"
+            name="desc"
             id="description"
-            value={description}
+            value={desc}
             placeholder="Enter income or expense description"
             onChange={onChange}
+            required
           />
         </div>
         <div className="value-date">
           <label htmlFor="value">Value</label>
-          <label htmlFor="date">Date</label>
+          <label htmlFor="expenseDate">Date</label>
         </div>
         <div className="value-date">
           <input
@@ -42,14 +64,16 @@ const ExpenseForm = () => {
             value={value}
             placeholder="Enter value"
             onChange={onChange}
+            required
           />
 
           <input
             type="date"
-            name="date"
-            id="date"
-            value={date}
+            name="expenseDate"
+            id="expenseDate"
+            value={expenseDate}
             onChange={onChange}
+            required
           />
         </div>
 

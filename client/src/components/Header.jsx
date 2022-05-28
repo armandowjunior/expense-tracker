@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { logout, reset } from "../redux/auth/authSlice";
+import { useNavigate, Link } from "react-router-dom";
+import { logout } from "../redux/auth/authSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -9,18 +9,22 @@ const Header = () => {
 
   const onClick = () => {
     dispatch(logout());
-    dispatch(reset());
-
     navigate("/login");
   };
 
   return (
     <header>
-      <p>Expense Tracker</p>
+      <p>
+        <Link className="header-link" to={"/"}>
+          Expense Tracker
+        </Link>
+      </p>
 
-      <button className="btn" onClick={onClick}>
-        Logout
-      </button>
+      {user && (
+        <button className="btn" onClick={onClick}>
+          Logout
+        </button>
+      )}
     </header>
   );
 };
