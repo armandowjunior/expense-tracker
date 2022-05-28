@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { VscAccount } from "react-icons/vsc";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { registerUser, reset } from "../redux/auth/authSlice";
+import { registerUser, reset } from "../features/auth/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {

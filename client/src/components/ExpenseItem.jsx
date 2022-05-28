@@ -1,7 +1,7 @@
 import { FaTrashAlt } from "react-icons/fa";
 import numberWithCommas from "../utils/numberWithCommas";
 import { useDispatch } from "react-redux";
-import { deleteExpense } from "../redux/expenses/expenseSlice";
+import { deleteExpense } from "../features/expenses/expenseSlice";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 

@@ -4,7 +4,7 @@ import { MdLogin } from "react-icons/md";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { reset, loginUser } from "../redux/auth/authSlice";
+import { reset, loginUser } from "../features/auth/authSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({

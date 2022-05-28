@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { registerExpense } from "../redux/expenses/expenseSlice";
+import { registerExpense } from "../features/expenses/expenseSlice";
 import { toast } from "react-toastify";
 
 const ExpenseForm = () => {

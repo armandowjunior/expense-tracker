@@ -6,8 +6,8 @@ import ExpenseForm from "../components/ExpenseForm";
 import ExpenseItem from "../components/ExpenseItem";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
-import { reset, getExpenses } from "../redux/expenses/expenseSlice";
-import { logout } from "../redux/auth/authSlice";
+import { reset, getExpenses } from "../features/expenses/expenseSlice";
+import { logout } from "../features/auth/authSlice";
 import numberWithCommas from "../utils/numberWithCommas";
 import greetings from "../utils/greetings";
 
