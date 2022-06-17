@@ -38,8 +38,9 @@ const ExpenseForm = () => {
   };
 
   return (
-    <section className="expense-form">
-      <form className="form" onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
+      <fieldset className="expense-fieldset">
+        <legend>Enter Income or Expense Information</legend>
         <label htmlFor="desc">Description</label>
         <div className="description-input">
           <input
@@ -76,12 +77,12 @@ const ExpenseForm = () => {
             required
           />
         </div>
+      </fieldset>
 
-        <button type="submit" className="btn expense-btn">
-          Submit
-        </button>
-      </form>
-    </section>
+      <button type="submit" className="btn expense-btn">
+        Submit
+      </button>
+    </form>
   );
 };
 

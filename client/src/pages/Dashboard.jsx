@@ -62,11 +62,12 @@ const Dashboard = () => {
 
   return (
     <>
-      <h1 className="heading">
+      <section className="heading">
         {greetings()}, {user && user.name}!
-      </h1>
+      </section>
+
       <section className="balance">
-        <p>Your balance:</p>
+        <p className="balance-title">Your Balance</p>
         <h2> {numberWithCommas(totalAmount)} </h2>
         <div className="income-expense">
           <p className="income"> +{numberWithCommas(positiveAmount)}</p>
@@ -74,11 +75,15 @@ const Dashboard = () => {
         </div>
       </section>
 
-      <ExpenseForm />
+      <section className="expense-form">
+        <ExpenseForm />
+      </section>
 
-      <ExpenseFilter />
+      <section className="incomes-and-expenses">
+        <h2 className="incomes-and-expenses-title">Incomes and Expenses</h2>
 
-      <section className="expenses-list">
+        <ExpenseFilter />
+
         {expenses.length > 0 ? (
           <>
             {expenses.map((expenses) => (

@@ -24,12 +24,32 @@ const createExpense = async (req, res, next) => {
 };
 
 //@desc get expenses from userId
-//@route POST /api/expenses
+//@route GET /api/expenses
 //@access PRIVATE
 
 const getExpenses = async (req, res, next) => {
   try {
     const expenses = await Expense.find({ userId: req.user._id }).sort({
+      expenseDate: -1,
+    });
+
+    res.status(200).json(expenses);
+  } catch (error) {
+    next(error);
+  }
+};
+
+//@desc get expenses from userId and query for specific year and month;
+//@route GET /api/expensesfilter
+//@access PRIVATE
+
+const getExpensesFiltered = async (req, res, next) => {
+  try {
+    // console.log(req.query);
+    const expenses = await Expense.find({
+      userId: req.user._id,
+      // expenseDate: { $gte: "2022-03-01", $lte: "2022-03-31" },
+    }).sort({
       expenseDate: -1,
     });
 
@@ -75,5 +95,6 @@ const deleteExpense = async (req, res, next) => {
 module.exports = {
   createExpense,
   getExpenses,
+  getExpensesFiltered,
   deleteExpense,
 };
