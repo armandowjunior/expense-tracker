@@ -6,6 +6,18 @@ const errorHandler = (err, req, res, next) => {
 
   let message = err.message;
 
+  console.log();
+  console.log(err.message);
+
+  if (err.name === "RangeError" && err.message.includes("Invalid time value")) {
+    statusCode = 400;
+  }
+
+  if (err.name === "CastError" && err.message.includes("Cast to date failed")) {
+    statusCode = 400;
+    message = "Please enter a valid date to filter";
+  }
+
   if (statusCode === 401) {
     message = "Not authorized";
   }

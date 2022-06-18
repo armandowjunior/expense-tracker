@@ -45,10 +45,19 @@ const getExpenses = async (req, res, next) => {
 
 const getExpensesFiltered = async (req, res, next) => {
   try {
-    // console.log(req.query);
+    const { year, month } = req.query;
+
+    const firstDay = new Date(Date.UTC(year, month, 1)).toISOString();
+    const lastDay = new Date(
+      Date.UTC(year, parseInt(month) + 1, 0, 23, 59, 59)
+    ).toISOString();
+
     const expenses = await Expense.find({
       userId: req.user._id,
-      // expenseDate: { $gte: "2022-03-01", $lte: "2022-03-31" },
+      expenseDate: {
+        $gte: firstDay,
+        $lte: lastDay,
+      },
     }).sort({
       expenseDate: -1,
     });

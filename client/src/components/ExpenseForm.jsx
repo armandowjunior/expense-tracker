@@ -32,7 +32,7 @@ const ExpenseForm = () => {
       registerExpense({
         desc,
         value,
-        expenseDate: new Date(expenseDate + "T00:00:00"),
+        expenseDate,
       })
     );
   };

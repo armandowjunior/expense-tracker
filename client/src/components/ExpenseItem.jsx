@@ -35,9 +35,7 @@ const ExpenseItem = (expenses) => {
         </p>
       </div>
       <p className="expense-date">
-        {new Date(expenseDate).toLocaleString("en-GB", {
-          dateStyle: "full",
-        })}
+        {new Date(expenseDate).toUTCString().slice(0, 16)}
       </p>
       <FaTrashAlt className="delete-btn" onClick={onClick} />
     </div>

@@ -71,7 +71,11 @@ const Dashboard = () => {
         <h2> {numberWithCommas(totalAmount)} </h2>
         <div className="income-expense">
           <p className="income"> +{numberWithCommas(positiveAmount)}</p>
-          <p className="expense"> {numberWithCommas(negativeAmount)}</p>
+          <p className="income-expense-dash">|</p>
+          <p className="expense">
+            {negativeAmount === 0 ? "-" : ""}
+            {numberWithCommas(negativeAmount)}
+          </p>
         </div>
       </section>
 
@@ -82,18 +86,15 @@ const Dashboard = () => {
       <section className="incomes-and-expenses">
         <h2 className="incomes-and-expenses-title">Incomes and Expenses</h2>
 
-        <ExpenseFilter />
-
         {expenses.length > 0 ? (
           <>
+            <ExpenseFilter />
             {expenses.map((expenses) => (
               <ExpenseItem key={expenses._id} expense={expenses} />
             ))}
           </>
         ) : (
-          <div className="expense-item no-expenses">
-            You don't have any expenses yet
-          </div>
+          <div className="no-expenses">You don't have any expenses yet</div>
         )}
       </section>
     </>

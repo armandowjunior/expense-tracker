@@ -98,9 +98,9 @@ header p {
 .balance-title {
   position: absolute;
   top: 0;
-  left: 5.5vw;
-  font-size: 1.25rem;
-  font-weight: 300;
+  left: 6.5vw;
+  font-size: 1rem;
+  font-weight: 500;
   line-height: 1;
   margin: -0.625rem auto; /* half of font-size */
   background-color: white;
@@ -113,12 +113,13 @@ header p {
 
 .income {
   color: rgb(18, 164, 18);
-  border-right: 1px solid #cfc8cf;
-  padding-right: 2rem;
+}
+
+.income-expense-dash {
+  color: #cfc8cf;
 }
 
 .expense {
-  padding-left: 2rem;
   color: rgb(192, 11, 11);
 }
 
@@ -136,8 +137,8 @@ header p {
 }
 
 .expense-fieldset legend {
-  font-size: 1.25rem;
-  font-weight: 300;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .value-date {
@@ -171,13 +172,13 @@ header p {
 .incomes-and-expenses-title {
   position: absolute;
   top: 0;
-  left: 16vw;
-  font-size: 1.25rem;
+  left: 18vw;
+  font-size: 1rem;
   line-height: 1;
   margin: -0.625rem auto; /* half of font-size */
   background-origin: content-box;
   background-color: white;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 .filter-container {
@@ -215,6 +216,9 @@ header p {
   display: flex;
   justify-content: space-between;
   font-weight: 600;
+  background-color: #f9f9f9;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .desc-text {
@@ -226,6 +230,9 @@ header p {
 .expense-date {
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
+  background-color: #f9f9f9;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .delete-btn {
@@ -239,7 +246,7 @@ header p {
 
 .no-expenses {
   text-align: center;
-  font-size: 1.25rem;
+  font-size: 1rem;
   padding: 1.5rem;
 }
 
