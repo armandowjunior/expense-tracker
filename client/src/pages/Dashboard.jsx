@@ -16,7 +16,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const { expenses, pending, error, errorMessage } = useSelector(
+  const { expenses, pending, error, errorMessage, filter } = useSelector(
     (state) => state.expenses
   );
 
@@ -86,15 +86,20 @@ const Dashboard = () => {
       <section className="incomes-and-expenses">
         <h2 className="incomes-and-expenses-title">Incomes and Expenses</h2>
 
+        <ExpenseFilter />
+
         {expenses.length > 0 ? (
           <>
-            <ExpenseFilter />
             {expenses.map((expenses) => (
               <ExpenseItem key={expenses._id} expense={expenses} />
             ))}
           </>
         ) : (
-          <div className="no-expenses">You don't have any expenses yet</div>
+          <div className="no-expenses">
+            {filter
+              ? "No expenses matched your filter"
+              : "You don't have any expenses yet"}
+          </div>
         )}
       </section>
     </>

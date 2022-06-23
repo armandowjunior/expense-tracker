@@ -202,6 +202,17 @@ header p {
   padding: 0 0.5rem;
 }
 
+.filter-values {
+  margin: 0 auto;
+  width: fit-content;
+  font-size: 1rem;
+  padding: 0.5rem;
+  margin-top: -0.75rem;
+  font-weight: 500;
+  border: 1px solid #cfc8cf;
+  border-radius: 5px;
+}
+
 .expense-item {
   font-size: 1rem;
   font-weight: 500;

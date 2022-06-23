@@ -16,6 +16,25 @@ const getExpenses = async (token) => {
   return res.data;
 };
 
+//@desc Get expenses from user using a query
+//@access PRIVATE
+const getExpensesFiltered = async (token, queryData) => {
+  const { year, month } = queryData;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res = await axios.get(
+    API_URL + `filter?year=${year}&month=${month}`,
+    config
+  );
+
+  return res.data;
+};
+
 //@desc Delete expense from user
 //@access PRIVATE
 const deleteExpense = async (token, expenseId) => {
@@ -46,6 +65,7 @@ const registerExpense = async (token, expenseData) => {
 
 const expenseService = {
   getExpenses,
+  getExpensesFiltered,
   deleteExpense,
   registerExpense,
 };

@@ -6,6 +6,8 @@ const initialState = {
   pending: false,
   error: false,
   errorMessage: "",
+  filter: false,
+  filterData: "",
 };
 
 export const getExpenses = createAsyncThunk(
@@ -14,6 +16,18 @@ export const getExpenses = createAsyncThunk(
     const token = thunkAPI.getState().auth.user.token;
     try {
       return await expenseService.getExpenses(token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const getExpensesFiltered = createAsyncThunk(
+  "expenses/getExpensesFiltered",
+  async (queryData, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
+    try {
+      return await expenseService.getExpensesFiltered(token, queryData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.message);
     }
@@ -60,11 +74,28 @@ export const expenseSlice = createSlice({
     [getExpenses.fulfilled]: (state, action) => {
       state.pending = false;
       state.expenses = action.payload;
+      state.filter = false;
     },
     [getExpenses.rejected]: (state, action) => {
       state.pending = false;
       state.error = true;
       state.errorMessage = action.payload;
+      state.filter = false;
+    },
+    [getExpensesFiltered.pending]: (state) => {
+      state.pending = true;
+    },
+    [getExpensesFiltered.fulfilled]: (state, action) => {
+      state.pending = false;
+      state.expenses = action.payload;
+      state.filter = true;
+      state.filterData = action.meta.arg;
+    },
+    [getExpensesFiltered.rejected]: (state, action) => {
+      state.pending = false;
+      state.error = true;
+      state.errorMessage = action.payload;
+      state.filter = false;
     },
     [deleteExpense.pending]: (state) => {
       state.pending = true;
@@ -83,12 +114,12 @@ export const expenseSlice = createSlice({
     [registerExpense.pending]: (state) => {
       state.pending = true;
     },
-    [registerExpense.fulfilled]: (state, action) => {
+    [registerExpense.fulfilled]: (state) => {
       state.pending = false;
-      state.expenses.unshift(action.payload);
     },
     [registerExpense.rejected]: (state, action) => {
       state.pending = false;
+      state.filter = false;
       state.error = true;
       state.errorMessage = action.payload;
     },

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { registerExpense } from "../features/expenses/expenseSlice";
+import {
+  registerExpense,
+  getExpenses,
+} from "../features/expenses/expenseSlice";
 import { toast } from "react-toastify";
 
 const ExpenseForm = () => {
@@ -35,6 +38,8 @@ const ExpenseForm = () => {
         expenseDate,
       })
     );
+
+    dispatch(getExpenses());
   };
 
   return (
