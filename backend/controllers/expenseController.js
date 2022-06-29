@@ -68,6 +68,43 @@ const getExpensesFiltered = async (req, res, next) => {
   }
 };
 
+//@desc get all the years of the transactions;
+//@route GET /api/expensesyears
+//@access PRIVATE
+
+const getExpensesYears = async (req, res, next) => {
+  try {
+    const years = await Expense.aggregate([
+      {
+        $match: {
+          userId: req.user._id,
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          year: { $year: "$expenseDate" },
+        },
+      },
+      {
+        $group: {
+          _id: 0,
+          uniqueValues: { $addToSet: "$year" },
+        },
+      },
+      { $unwind: "$uniqueValues" },
+      { $sort: { uniqueValues: -1 } },
+      { $group: { _id: null, years: { $push: "$uniqueValues" } } },
+    ]);
+
+    const yearsValue = years[0]?.years ? years[0].years : [];
+
+    res.status(200).json(yearsValue);
+  } catch (error) {
+    next(error);
+  }
+};
+
 //@desc delete expense from userId
 //@route DELETE /api/expenses/:expenseId
 //@access PRIVATE
@@ -105,5 +142,6 @@ module.exports = {
   createExpense,
   getExpenses,
   getExpensesFiltered,
+  getExpensesYears,
   deleteExpense,
 };

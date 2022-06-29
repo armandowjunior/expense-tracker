@@ -1,7 +1,9 @@
 import { FaTrashAlt } from "react-icons/fa";
-import numberWithCommas from "../utils/numberWithCommas";
 import { useDispatch } from "react-redux";
-import { deleteExpense } from "../features/expenses/expenseSlice";
+import {
+  deleteExpense,
+  getExpensesYears,
+} from "../features/expenses/expenseSlice";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
@@ -17,7 +19,10 @@ const ExpenseItem = (expenses) => {
       buttons: [
         {
           label: "Yes",
-          onClick: () => dispatch(deleteExpense(_id)),
+          onClick: async () => {
+            await dispatch(deleteExpense(_id));
+            dispatch(getExpensesYears());
+          },
         },
         {
           label: "No",
@@ -31,7 +36,7 @@ const ExpenseItem = (expenses) => {
       <div className="expense-desc-value">
         <p className="desc-text">{desc}</p>
         <p className={value > 0 ? "value-positive" : "value-negative"}>
-          $ {(value > 0 ? "+" : "") + numberWithCommas(value)}
+          $ {(value > 0 ? "+" : "") + value.toLocaleString()}
         </p>
       </div>
       <p className="expense-date">

@@ -8,6 +8,7 @@ const initialState = {
   errorMessage: "",
   filter: false,
   filterData: "",
+  yearsToFilter: [],
 };
 
 export const getExpenses = createAsyncThunk(
@@ -16,6 +17,18 @@ export const getExpenses = createAsyncThunk(
     const token = thunkAPI.getState().auth.user.token;
     try {
       return await expenseService.getExpenses(token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const getExpensesYears = createAsyncThunk(
+  "expenses/getExpensesYears",
+  async (_, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
+    try {
+      return await expenseService.getExpensesYears(token);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.message);
     }
@@ -82,6 +95,18 @@ export const expenseSlice = createSlice({
       state.errorMessage = action.payload;
       state.filter = false;
     },
+    [getExpensesYears.pending]: (state) => {
+      state.pending = true;
+    },
+    [getExpensesYears.fulfilled]: (state, action) => {
+      state.pending = false;
+      state.yearsToFilter = action.payload;
+    },
+    [getExpensesYears.rejected]: (state, action) => {
+      state.pending = false;
+      state.error = true;
+      state.errorMessage = action.payload;
+    },
     [getExpensesFiltered.pending]: (state) => {
       state.pending = true;
     },
@@ -114,8 +139,9 @@ export const expenseSlice = createSlice({
     [registerExpense.pending]: (state) => {
       state.pending = true;
     },
-    [registerExpense.fulfilled]: (state) => {
+    [registerExpense.fulfilled]: (state, action) => {
       state.pending = false;
+      state.expenses.unshift(action.payload);
     },
     [registerExpense.rejected]: (state, action) => {
       state.pending = false;

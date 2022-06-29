@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   registerExpense,
-  getExpenses,
+  getExpensesYears,
 } from "../features/expenses/expenseSlice";
 import { toast } from "react-toastify";
 
@@ -24,14 +24,14 @@ const ExpenseForm = () => {
     }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     if (value === "0") {
       return toast.error("Please add a positive or negative value");
     }
 
-    dispatch(
+    await dispatch(
       registerExpense({
         desc,
         value,
@@ -39,7 +39,7 @@ const ExpenseForm = () => {
       })
     );
 
-    dispatch(getExpenses());
+    dispatch(getExpensesYears());
   };
 
   return (

@@ -6,9 +6,12 @@ import ExpenseForm from "../components/ExpenseForm";
 import ExpenseItem from "../components/ExpenseItem";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
-import { reset, getExpenses } from "../features/expenses/expenseSlice";
+import {
+  reset,
+  getExpenses,
+  getExpensesYears,
+} from "../features/expenses/expenseSlice";
 import { logout } from "../features/auth/authSlice";
-import numberWithCommas from "../utils/numberWithCommas";
 import greetings from "../utils/greetings";
 
 const Dashboard = () => {
@@ -16,13 +19,15 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const { expenses, pending, error, errorMessage, filter } = useSelector(
-    (state) => state.expenses
-  );
+  const { expenses, pending, error, errorMessage, filter, filterData } =
+    useSelector((state) => state.expenses);
+
+  const { monthName, year } = filterData;
 
   // UseEffect para o get ser apenas na primeira renderização da página;
   useEffect(() => {
     dispatch(getExpenses());
+    dispatch(getExpensesYears());
   }, [dispatch]);
 
   // UseEffect para pegar erros;
@@ -60,6 +65,10 @@ const Dashboard = () => {
     .filter((value) => value < 0)
     .reduce((prevValue, currValue) => prevValue + currValue, 0);
 
+  const removeFilters = () => {
+    dispatch(getExpenses());
+  };
+
   return (
     <>
       <section className="heading">
@@ -68,13 +77,13 @@ const Dashboard = () => {
 
       <section className="balance">
         <p className="balance-title">Your Balance</p>
-        <h2> {numberWithCommas(totalAmount)} </h2>
+        <h2> {totalAmount.toLocaleString()} </h2>
         <div className="income-expense">
-          <p className="income"> +{numberWithCommas(positiveAmount)}</p>
+          <p className="income"> +{positiveAmount.toLocaleString()}</p>
           <p className="income-expense-dash">|</p>
           <p className="expense">
             {negativeAmount === 0 ? "-" : ""}
-            {numberWithCommas(negativeAmount)}
+            {negativeAmount.toLocaleString()}
           </p>
         </div>
       </section>
@@ -86,10 +95,21 @@ const Dashboard = () => {
       <section className="incomes-and-expenses">
         <h2 className="incomes-and-expenses-title">Incomes and Expenses</h2>
 
-        <ExpenseFilter />
+        {filter && (
+          <div className="filter-on">
+            <p className="filter-values">
+              {monthName} {year}
+            </p>
+            <button className="btn btn-remove-filter" onClick={removeFilters}>
+              Remove filters
+            </button>
+          </div>
+        )}
 
         {expenses.length > 0 ? (
           <>
+            {!filter && <ExpenseFilter />}
+
             {expenses.map((expenses) => (
               <ExpenseItem key={expenses._id} expense={expenses} />
             ))}

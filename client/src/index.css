@@ -21,6 +21,22 @@ legend {
   text-align: center;
 }
 
+/* Selector to only target firefox */
+@-moz-document url-prefix() {
+  fieldset {
+    position: relative;
+  }
+
+  legend {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%); /* centered in responsive design*/
+    font-size: 1rem;
+    background-color: white;
+  }
+}
+
 .container {
   max-width: 960px;
   margin: 0 auto;
@@ -98,11 +114,9 @@ header p {
 .balance-title {
   position: absolute;
   top: 0;
-  left: 6.5vw;
+  left: 50%;
+  transform: translate(-50%, -50%); /* centered in responsive design*/
   font-size: 1rem;
-  font-weight: 500;
-  line-height: 1;
-  margin: -0.625rem auto; /* half of font-size */
   background-color: white;
 }
 
@@ -171,14 +185,12 @@ header p {
 
 .incomes-and-expenses-title {
   position: absolute;
+  text-align: center;
   top: 0;
-  left: 18vw;
+  left: 50%;
+  transform: translate(-50%, -50%); /* centered in responsive design*/
   font-size: 1rem;
-  line-height: 1;
-  margin: -0.625rem auto; /* half of font-size */
-  background-origin: content-box;
   background-color: white;
-  font-weight: 500;
 }
 
 .filter-container {
@@ -287,6 +299,13 @@ header p {
   padding: 3px;
   margin-bottom: 0.75rem;
   width: 100%;
+}
+
+.btn-remove-filter {
+  display: block;
+  font-size: 1rem;
+  padding: 0.25rem 3rem;
+  margin: 0.5rem auto;
 }
 
 .btn-submit,

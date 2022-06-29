@@ -16,6 +16,20 @@ const getExpenses = async (token) => {
   return res.data;
 };
 
+//@desc Get expenses years from user
+//@access PRIVATE
+const getExpensesYears = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const res = await axios.get(API_URL + "years", config);
+
+  return res.data;
+};
+
 //@desc Get expenses from user using a query
 //@access PRIVATE
 const getExpensesFiltered = async (token, queryData) => {
@@ -65,6 +79,7 @@ const registerExpense = async (token, expenseData) => {
 
 const expenseService = {
   getExpenses,
+  getExpensesYears,
   getExpensesFiltered,
   deleteExpense,
   registerExpense,
