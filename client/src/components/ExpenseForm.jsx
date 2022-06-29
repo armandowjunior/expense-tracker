@@ -46,14 +46,14 @@ const ExpenseForm = () => {
     <form onSubmit={onSubmit}>
       <fieldset className="expense-fieldset">
         <legend>Enter Income or Expense Information</legend>
-        <label htmlFor="desc">Description</label>
+        <label htmlFor="description">Description</label>
         <div className="description-input">
           <input
             type="text"
             name="desc"
             id="description"
             value={desc}
-            placeholder="Enter income or expense description"
+            placeholder="Enter description"
             onChange={onChange}
             required
           />

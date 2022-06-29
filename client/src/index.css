@@ -21,22 +21,6 @@ legend {
   text-align: center;
 }
 
-/* Selector to only target firefox */
-@-moz-document url-prefix() {
-  fieldset {
-    position: relative;
-  }
-
-  legend {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%); /* centered in responsive design*/
-    font-size: 1rem;
-    background-color: white;
-  }
-}
-
 .container {
   max-width: 960px;
   margin: 0 auto;
@@ -100,7 +84,8 @@ header p {
 }
 
 .balance {
-  width: 30%;
+  width: fit-content;
+  min-width: 30%;
   text-align: center;
   line-height: 1.75;
   margin: 1rem auto;
@@ -116,8 +101,9 @@ header p {
   top: 0;
   left: 50%;
   transform: translate(-50%, -50%); /* centered in responsive design*/
-  font-size: 1rem;
   background-color: white;
+  font-size: 1rem;
+  line-height: 100%;
 }
 
 .income-expense {
@@ -189,8 +175,8 @@ header p {
   top: 0;
   left: 50%;
   transform: translate(-50%, -50%); /* centered in responsive design*/
-  font-size: 1rem;
   background-color: white;
+  font-size: 1rem;
 }
 
 .filter-container {
@@ -210,10 +196,6 @@ header p {
   margin-bottom: 0.5rem;
 }
 
-.filter label {
-  padding: 0 0.5rem;
-}
-
 .filter-values {
   margin: 0 auto;
   width: fit-content;
@@ -223,6 +205,10 @@ header p {
   font-weight: 500;
   border: 1px solid #cfc8cf;
   border-radius: 5px;
+}
+
+.filter label {
+  padding: 0 0.5rem;
 }
 
 .expense-item {
@@ -371,5 +357,60 @@ header p {
   50% {
     color: #cfc8cf;
     transform: rotate(360deg) scale(0.75);
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  html {
+    font-size: 0.75rem;
+  }
+
+  body {
+    font-size: 0.875rem;
+  }
+
+  .filter {
+    flex-direction: column;
+    margin-top: 0.25rem;
+  }
+
+  #year-filter,
+  #month-filter {
+    margin: 0.25rem;
+  }
+
+  .filter legend {
+    margin-bottom: -0.5rem;
+  }
+
+  .filter-values {
+    margin-top: 0.125rem;
+  }
+
+  .value-positive,
+  .value-negative {
+    word-break: break-all;
+  }
+}
+
+/* Selector to only target firefox */
+@-moz-document url-prefix() {
+  fieldset {
+    position: relative;
+  }
+
+  legend {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%); /* centered in responsive design*/
+    font-size: 1rem;
+    background-color: white;
+  }
+
+  @media only screen and (max-width: 560px) {
+    .expense-fieldset {
+      padding-top: 2rem;
+    }
   }
 }
