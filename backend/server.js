@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const dotenv = require("dotenv").config();
 const morgan = require("morgan");
@@ -18,6 +19,19 @@ if (process.env.NODE_ENV === "development") {
 
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/expenses", require("./routes/expenseRoutes"));
+
+// Serve frontend
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(
+      path.resolve(__dirname, "../", "client", "build", "index.html")
+    )
+  );
+} else {
+  app.get("/", (req, res) => res.send("Please set to production"));
+}
 
 app.use(errorHandler);
 
